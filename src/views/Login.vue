@@ -18,16 +18,22 @@
         </form>
       </div>
     </div>
+    <button @click="createRandomLogin" class="btn btn-primary">
+      Random name
+    </button>
   </div>
 </template>
 
 <script>
+import { namesArray } from "@/names.js";
+
 export default {
   name: "login",
   data() {
     return {
       name: "",
-      errorText: null
+      errorText: null,
+      namesArray: namesArray
     };
   },
   methods: {
@@ -37,6 +43,12 @@ export default {
       } else {
         this.errorText = "Please enter a name first!";
       }
+    },
+    createRandomLogin() {
+      let randomName = this.namesArray[
+        Math.floor(Math.random() * this.namesArray.length)
+      ];
+      this.$router.push({ name: "chat", params: { name: randomName } });
     }
   }
 };

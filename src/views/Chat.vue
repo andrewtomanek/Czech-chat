@@ -48,7 +48,8 @@ export default {
           this.messages.push({
             id: doc.id,
             name: doc.data().name,
-            message: doc.data().message
+            message: doc.data().message,
+            timestamp: moment(doc.data().timestamp).format("LTS")
           });
         }
       });
