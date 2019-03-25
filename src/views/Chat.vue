@@ -1,23 +1,26 @@
 <template>
-  <div class="container chat">
-    <h2 class="text-primary text-center">Real-Time Chat</h2>
-    <h5 class="text-secondary text-center">Powered by Vue.js & Firebase</h5>
-    <div class="card">
-      <div class="card-body">
-        <p class="text-secondary nomessages" v-if="messages.length == 0">
-          [No messages yet!]
-        </p>
-        <div class="messages" v-chat-scroll="{ always: false, smooth: true }">
-          <div v-for="message in messages" :key="message.id">
-            <span class="text-info">[{{ message.name }}]: </span>
-            <span>{{ message.message }}</span>
-            <span class="text-secondary time">{{ message.timestamp }}</span>
-          </div>
+  <div class="chat__container">
+    <div class="chat__card-box">
+      <p class="chat__nomessages" v-if="messages.length == 0">
+        [No messages yet!]
+      </p>
+      <div
+        class="messages__box"
+        v-chat-scroll="{ always: false, smooth: true }"
+      >
+        <div
+          class="message__item"
+          v-for="message in messages"
+          :key="message.id"
+        >
+          <span class="message__title">[{{ message.name }}]: </span>
+          <span class="message__text-content">{{ message.message }}</span>
+          <span class="message__text-time">{{ message.timestamp }}</span>
         </div>
       </div>
-      <div class="card-action">
-        <CreateMessage :name="name" />
-      </div>
+    </div>
+    <div class="message__input">
+      <CreateMessage :name="name" />
     </div>
   </div>
 </template>
@@ -59,27 +62,71 @@ export default {
 </script>
 
 <style>
-.chat h2 {
-  font-size: 2.6em;
-  margin-bottom: 0px;
+.chat__container {
+  width: 100%;
+  height: 85vh;
+  display: grid;
+}
+.chat__card-box {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  justify-items: center;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
 }
 
-.chat h5 {
-  margin-top: 0px;
-  margin-bottom: 40px;
+.chat__nomessages {
+  height: auto;
+  width: 100%;
+  color: hsla(3, 99%, 48%, 1);
+  font-weight: 700;
+  text-align: center;
+  background-color: hsla(205, 100%, 80%, 0.9);
+  border-radius: 15px;
 }
 
-.chat span {
-  font-size: 1.2em;
+.messages__box {
+  height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.chat .time {
-  display: block;
-  font-size: 0.7em;
+.message__item {
+  margin: 0.3rem 0rem;
+  padding: 1.3rem 0.5rem;
+  width: 97vw;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  gap: 0rem 1rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 100%, 37%, 1);
 }
 
-.messages {
-  max-height: 300px;
-  overflow: auto;
+.message__title {
+  padding: 0.3rem;
+  font-weight: 700;
+  text-align: center;
+  color: hsla(21, 70%, 44%, 1);
+}
+.message__text-content {
+  width: 100%;
+  padding: 0.3rem;
+  color: white;
+  font-weight: 500;
+  font-size: 1rem;
+  text-align: left;
+}
+.message__text-time {
+  padding: 0.2rem;
+  color: white;
+  font-weight: 500;
+  text-align: left;
+}
+.message__input {
+  padding: 0;
 }
 </style>
