@@ -23,7 +23,7 @@ import fb from "@/firebase/init";
 
 export default {
   name: "CreateMessage",
-  props: ["name"],
+  props: ["name", "room"],
   data() {
     return {
       newMessage: null,
@@ -33,10 +33,11 @@ export default {
   methods: {
     createMessage() {
       if (this.newMessage) {
-        fb.collection("messages")
+        fb.collection(this.room)
           .add({
             message: this.newMessage,
             name: this.name,
+            room: this.room,
             timestamp: Date.now()
           })
           .catch(err => {

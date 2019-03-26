@@ -3,6 +3,7 @@
     <div class="chat__card-box">
       <p class="chat__nomessages" v-if="messages.length == 0">
         [No messages yet!]
+        <span class="message__text-content">{{ room }}</span>
       </p>
       <div
         class="messages__box"
@@ -20,7 +21,7 @@
       </div>
     </div>
     <div class="message__input">
-      <CreateMessage :name="name" />
+      <CreateMessage :name="name" :room="room" />
     </div>
   </div>
 </template>
@@ -32,7 +33,7 @@ import moment from "moment";
 
 export default {
   name: "Chat",
-  props: ["name"],
+  props: ["name", "room"],
   components: {
     CreateMessage
   },
@@ -42,7 +43,7 @@ export default {
     };
   },
   created() {
-    let ref = fb.collection("messages").orderBy("timestamp");
+    let ref = fb.collection(this.room).orderBy("timestamp");
 
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
@@ -51,6 +52,7 @@ export default {
           this.messages.push({
             id: doc.id,
             name: doc.data().name,
+            room: doc.data().room,
             message: doc.data().message,
             timestamp: moment(doc.data().timestamp).format("LTS")
           });
@@ -94,7 +96,7 @@ export default {
 }
 
 .message__item {
-  margin: 0.3rem 0rem;
+  margin: 0.5rem 0rem;
   padding: 1.3rem 0.5rem;
   width: 97vw;
   display: grid;
@@ -103,26 +105,28 @@ export default {
   justify-items: center;
   align-items: start;
   align-content: space-between;
-  background-color: hsla(178, 100%, 37%, 1);
+  background-color: hsla(178, 99%, 99%, 15);
 }
 
 .message__title {
+  border: 0.3rem double hsla(178, 100%, 37%, 1);
   padding: 0.3rem;
   font-weight: 700;
   text-align: center;
-  color: hsla(21, 70%, 44%, 1);
+  color: white;
+  background-color: hsla(21, 70%, 44%, 1);
 }
 .message__text-content {
   width: 100%;
   padding: 0.3rem;
-  color: white;
-  font-weight: 500;
+  color: hsla(21, 70%, 44%, 1);
+  font-weight: 600;
   font-size: 1rem;
   text-align: left;
 }
 .message__text-time {
   padding: 0.2rem;
-  color: white;
+  color: hsla(178, 100%, 37%, 1);
   font-weight: 500;
   text-align: left;
 }
