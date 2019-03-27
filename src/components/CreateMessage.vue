@@ -33,7 +33,7 @@ export default {
   methods: {
     createMessage() {
       if (this.newMessage) {
-        fb.collection(this.room)
+        fb.collection("messages")
           .add({
             message: this.newMessage,
             name: this.name,
