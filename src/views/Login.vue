@@ -28,6 +28,18 @@
       Random name
     </button>
     <p>{{ rooms }}</p>
+    <div
+      class="user__list"
+      v-for="chatUser in userList"
+      :key="chatUser.toString()"
+    >
+      <span class="user__item">{{ chatUser }}: </span>
+    </div>
+    <div class="room__list" v-for="chatItem in chatArray" :key="chatItem.id">
+      <span class="room__title">{{ chatItem.room }}: </span>
+      <span class="room__users">{{ chatItem.users }}</span>
+      <span class="room__id">{{ chatItem.id }}</span>
+    </div>
   </div>
 </template>
 
@@ -167,5 +179,53 @@ export default {
 .login__button {
   font-size: 1rem;
   padding: 0.3rem;
+}
+
+.user__list {
+  display: grid;
+  grid-auto-flow: row;
+  width: 100vw;
+}
+
+.user__item {
+  font-size: 1rem;
+  font-weight: 600;
+  background: skyblue;
+  color: white;
+  width: 100%;
+}
+
+.room__list {
+  padding: 0.3rem 0.5rem;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 0rem 1rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 99%, 99%, 15);
+}
+
+.room__title {
+  border: 0.3rem double hsla(178, 100%, 37%, 1);
+  padding: 0.3rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(21, 70%, 44%, 1);
+}
+.room__users {
+  width: 100%;
+  padding: 0.3rem;
+  color: hsla(21, 70%, 44%, 1);
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+}
+.room__id {
+  padding: 0.2rem;
+  color: hsla(178, 100%, 37%, 1);
+  font-weight: 500;
+  text-align: left;
 }
 </style>
