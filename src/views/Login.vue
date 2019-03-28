@@ -1,15 +1,16 @@
 <template>
   <div class="login__container">
     <div class="login__card">
-      <h2 class="login__title">Login</h2>
       <form @submit.prevent="login" class="login__form">
-        <input
+                <label for="name">Username</label>
+                <input
           type="text"
           class="login__input"
           placeholder="Please enter your name ..."
           name="name"
           v-model="name"
         />
+                <label for="room">Room</label>
         <input
           type="text"
           class="login__input"
@@ -17,29 +18,39 @@
           name="room"
           v-model="room"
         />
-        <p class="login__danger">{{ userList }}</p>
-        <p class="login__danger">{{ roomList }}</p>
-        <p class="login__danger">{{ chatArray }}</p>
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
         <button type="submit" class="login__button">Enter Chat</button>
       </form>
-    </div>
     <button @click="createRandomLogin" class="login__button">
-      Random name
+      Generate login
     </button>
-    <p>{{ rooms }}</p>
-    <div
-      class="user__list"
-      v-for="chatUser in userList"
-      :key="chatUser.toString()"
-    >
-      <span class="user__item">{{ chatUser }}: </span>
     </div>
-    <div class="room__list" v-for="chatItem in chatArray" :key="chatItem.id">
-      <span class="room__title">{{ chatItem.room }}: </span>
-      <span class="room__users">{{ chatItem.users }}</span>
-      <span class="room__id">{{ chatItem.id }}</span>
+    <div class="chat__board"></div>
+    <div class="user__box">
+      <div
+        class="user__item"
+        v-for="chatUser in userList"
+        :key="chatUser.toString()"
+      >
+        <span class="user__name">{{ chatUser }}</span>
+      </div>
     </div>
+    <div class="room__box">
+      <div
+        class="room__list"
+        @click="pickRoom(chatItem.room)"
+        v-for="chatItem in chatArray"
+        :key="chatItem.id"
+      >
+        <span class="room__title">{{ chatItem.room }} </span>
+        <span class="room__users">{{ chatItem.users.toString() }}</span>
+        <span class="room__id">{{ chatItem.id }}</span>
+      </div>
+    </div>
+    <p class="login__danger">{{ userList }}</p>
+    <p class="login__danger">{{ roomList }}</p>
+    <p class="login__danger">{{ chatArray }}</p>
+  </div>
   </div>
 </template>
 
@@ -85,7 +96,6 @@ export default {
             element => element.room == this.room
           );
           openRoom.users.push(this.name);
-          console.log(openRoom);
           fb.collection("rooms")
             .doc(openRoom.id)
             .update({
@@ -97,7 +107,6 @@ export default {
         return;
       }
       this.userList = [...new Set(this.userSet)];
-      //     this.rooms = [...new Set(this.roomSet)];
       if (this.name) {
         this.$router.push({
           name: "chat",
@@ -108,16 +117,16 @@ export default {
       }
     },
     createRandomLogin() {
-      let randomName = this.namesArray[
+      this.name = this.namesArray[
         Math.floor(Math.random() * this.namesArray.length)
       ];
-      let randomRoom = this.placesArray[
+      this.room = this.placesArray[
         Math.floor(Math.random() * this.placesArray.length)
       ];
-      this.$router.push({
-        name: "chat",
-        params: { name: randomName, room: randomRoom }
-      });
+    },
+    pickRoom(user) {
+      console.log(user);
+      this.room = user;
     }
   },
   created() {
@@ -158,7 +167,12 @@ export default {
   width: 100%;
 }
 .login__card {
+  padding: 1rem 0.2rem;
   display: grid;
+  grid-auto-flow: row;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 1rem;
 }
 .login__title {
   font-size: 1rem;
@@ -167,11 +181,25 @@ export default {
 .login__form {
   display: grid;
   grid-auto-flow: row;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 1rem;
 }
 .login__input {
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   padding: 0.2rem;
+  width: 100%;
+  color: hsla(178, 50%, 30%, 1);
+  border: 0.2rem solid hsla(21, 70%, 44%, 1);
+}
+
+label {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.2rem;
+  width: 100%;
+  color: hsla(21, 80%, 60%, 1);
 }
 .login__danger {
   background-color: red;
@@ -179,15 +207,25 @@ export default {
 .login__button {
   font-size: 1rem;
   padding: 0.3rem;
+  font-weight: 700;
+  font-size: 1rem;
+  background-color: hsla(178, 100%, 37%, 1);
+  border: 0.1rem solid hsla(21, 70%, 44%, 1);
+  color: white;
 }
 
-.user__list {
+.user__box {
   display: grid;
-  grid-auto-flow: row;
+  grid-auto-flow: column;
   width: 100vw;
 }
 
 .user__item {
+  display: grid;
+  width: 100%;
+}
+
+.user__name {
   font-size: 1rem;
   font-weight: 600;
   background: skyblue;
@@ -195,10 +233,16 @@ export default {
   width: 100%;
 }
 
+.room__box {
+  display: grid;
+  grid-auto-flow: row;
+  width: 100vw;
+}
+
 .room__list {
   padding: 0.3rem 0.5rem;
   display: grid;
-  grid-auto-flow: row;
+  grid-auto-flow: column;
   gap: 0rem 1rem;
   justify-items: center;
   align-items: start;
