@@ -17,8 +17,9 @@
           name="room"
           v-model="room"
         />
-        <p class="login__danger">{{ roomList }}</p>
         <p class="login__danger">{{ userList }}</p>
+        <p class="login__danger">{{ roomList }}</p>
+        <p class="login__danger">{{ chatArray }}</p>
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
         <button type="submit" class="login__button">Enter Chat</button>
       </form>
@@ -45,7 +46,7 @@ export default {
       roomList: [],
       userList: [],
       roomSet: new Set(),
-      userArray: [],
+      chatArray: [],
       userSet: new Set(),
       errorText: null,
       namesArray: namesArray,
@@ -56,26 +57,35 @@ export default {
     login() {
       if (!this.userSet.has(this.name)) {
         this.userSet.add(this.name);
+        if (!this.roomSet.has(this.room)) {
+          this.roomSet.add(this.room);
+          let newUsers = [this.name];
+          fb.collection("rooms")
+            .add({
+              room: this.room,
+              users: newUsers
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        } else {
+          let openRoom = this.chatArray.find(
+            element => element.room == this.room
+          );
+          openRoom.users.push(this.name);
+          console.log(openRoom);
+          fb.collection("rooms")
+            .doc(openRoom.id)
+            .update({
+              users: openRoom.users
+            });
+        }
       } else {
         this.errorText = "duplicate name";
         return;
       }
-      this.userArray = [...new Set(this.userSet)];
-      if (!this.roomSet.has(this.room)) {
-        this.roomSet.add(this.room);
-      } else {
-        this.errorText = "duplicate room";
-        return;
-      }
-      this.rooms = [...new Set(this.roomSet)];
-      fb.collection("rooms")
-        .add({
-          room: this.room,
-          users: this.name
-        })
-        .catch(err => {
-          console.log(err);
-        });
+      this.userList = [...new Set(this.userSet)];
+      //     this.rooms = [...new Set(this.roomSet)];
       if (this.name) {
         this.$router.push({
           name: "chat",
@@ -101,13 +111,21 @@ export default {
   created() {
     let roomSet = this.roomSet;
     let userSet = this.userSet;
+    let chatArray = this.chatArray;
 
     fb.collection("rooms")
       .get()
       .then(function(querySnapshot) {
         querySnapshot.forEach(function(doc) {
           roomSet.add(doc.data().room);
-          userSet.add(doc.data().users);
+          doc.data().users.forEach(function(user) {
+            userSet.add(user);
+          });
+          chatArray.push({
+            id: doc.id,
+            users: doc.data().users,
+            room: doc.data().room
+          });
         });
       })
       .then(() => {
