@@ -10,6 +10,13 @@
           name="name"
           v-model="name"
         />
+                <label for="password">Password</label>
+        <input
+          type="password"
+                    class="login__input"
+          id="password"
+          v-model="password"
+        />
                 <label for="room">Room</label>
         <input
           type="text"
@@ -201,6 +208,7 @@ label {
   width: 100%;
   color: hsla(21, 80%, 60%, 1);
 }
+
 .login__danger {
   background-color: red;
 }

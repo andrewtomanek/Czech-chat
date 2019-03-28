@@ -2,9 +2,7 @@
   <div id="app">
     <nav id="nav">
       <router-link :to="{ name: 'login' }">Login</router-link>
-      <router-link :to="{ name: 'chat', params: { name: 'Nick' } }"
-        >Chat</router-link
-      >
+      <router-link :to="{ name: 'chat' }">Chat</router-link>
     </nav>
     <router-view />
   </div>

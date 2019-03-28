@@ -43,7 +43,10 @@ export default {
     };
   },
   created() {
-    let ref = fb.collection("messages").orderBy("timestamp");
+    let ref = fb
+      .collection("messages")
+      .where("room", "==", this.room)
+      .orderBy("timestamp");
 
     ref.onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
