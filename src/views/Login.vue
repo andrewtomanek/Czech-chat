@@ -2,22 +2,22 @@
   <div class="login__container">
     <div class="login__card">
       <form @submit.prevent="login" class="login__form">
-                <label for="name">Username</label>
-                <input
+        <label for="name">Username</label>
+        <input
           type="text"
           class="login__input"
           placeholder="Please enter your name ..."
           name="name"
           v-model="name"
         />
-                <label for="password">Password</label>
+        <label for="password">Password</label>
         <input
           type="password"
-                    class="login__input"
-          id="password"
+          class="login__input"
+          name="password"
           v-model="password"
         />
-                <label for="room">Room</label>
+        <label for="room">Room</label>
         <input
           type="text"
           class="login__input"
@@ -28,36 +28,37 @@
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
         <button type="submit" class="login__button">Enter Chat</button>
       </form>
-    <button @click="createRandomLogin" class="login__button">
-      Generate login
-    </button>
+      <button @click="createRandomLogin" class="login__button">
+        Generate login
+      </button>
     </div>
-    <div class="chat__board"></div>
-    <div class="user__box">
-      <div
-        class="user__item"
-        v-for="chatUser in userList"
-        :key="chatUser.toString()"
-      >
-        <span class="user__name">{{ chatUser }}</span>
+    <div class="chat__board">
+      <div class="user__box">
+        <div
+          class="user__item"
+          v-for="chatUser in userList"
+          :key="chatUser.toString()"
+        >
+          <span class="user__name">{{ chatUser }}</span>
+        </div>
       </div>
-    </div>
-    <div class="room__box">
-      <div
-        class="room__list"
-        @click="pickRoom(chatItem.room)"
-        v-for="chatItem in chatArray"
-        :key="chatItem.id"
-      >
-        <span class="room__title">{{ chatItem.room }} </span>
-        <span class="room__users">{{ chatItem.users.toString() }}</span>
-        <span class="room__id">{{ chatItem.id }}</span>
+      <div class="room__box">
+        <div
+          class="room__list"
+          @click="pickRoom(chatItem.room)"
+          v-for="chatItem in chatArray"
+          :key="chatItem.id"
+        >
+          <span class="room__title">{{ chatItem.room }} </span>
+          <span class="room__users">{{ chatItem.users.toString() }}</span>
+          <span class="room__id">{{ chatItem.id }}</span>
+        </div>
       </div>
+      <p class="login__danger">{{ userList }}</p>
+      <p class="login__danger">{{ roomList }}</p>
+      <p class="login__danger">{{ chatArray }}</p>
+      <p class="login__danger">{{ userArray }}</p>
     </div>
-    <p class="login__danger">{{ userList }}</p>
-    <p class="login__danger">{{ roomList }}</p>
-    <p class="login__danger">{{ chatArray }}</p>
-  </div>
   </div>
 </template>
 
@@ -72,10 +73,13 @@ export default {
     return {
       name: "",
       room: "",
+      password: "",
       rooms: [],
       roomList: [],
       userList: [],
+      checkPassword: [],
       roomSet: new Set(),
+      userArray: [],
       chatArray: [],
       userSet: new Set(),
       errorText: null,
@@ -90,10 +94,19 @@ export default {
         if (!this.roomSet.has(this.room)) {
           this.roomSet.add(this.room);
           let newUsers = [this.name];
+
           fb.collection("rooms")
             .add({
               room: this.room,
               users: newUsers
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          fb.collection("users")
+            .add({
+              user: this.name,
+              password: this.password
             })
             .catch(err => {
               console.log(err);
@@ -108,10 +121,29 @@ export default {
             .update({
               users: openRoom.users
             });
+          fb.collection("users")
+            .add({
+              user: this.name,
+              password: this.password
+            })
+            .catch(err => {
+              console.log(err);
+            });
         }
       } else {
         this.errorText = "duplicate name";
-        return;
+        this.checkPassword = this.userArray.filter(
+          element => element.user == this.name
+        );
+        if (this.checkPassword[0].password == this.password) {
+          this.$router.push({
+            name: "chat",
+            params: { name: this.name, room: this.room }
+          });
+        } else {
+          this.errorText = "Please enter a correct password!";
+          return;
+        }
       }
       this.userList = [...new Set(this.userSet)];
       if (this.name) {
@@ -132,7 +164,6 @@ export default {
       ];
     },
     pickRoom(user) {
-      console.log(user);
       this.room = user;
     }
   },
@@ -153,6 +184,26 @@ export default {
             id: doc.id,
             users: doc.data().users,
             room: doc.data().room
+          });
+        });
+      })
+      .then(() => {
+        this.roomList = [...roomSet];
+        this.userList = [...userSet];
+      })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
+
+    let userArray = this.userArray;
+    fb.collection("users")
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(function(doc) {
+          userArray.push({
+            id: doc.id,
+            user: doc.data().user,
+            password: doc.data().password
           });
         });
       })
