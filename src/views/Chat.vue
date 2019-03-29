@@ -2,19 +2,21 @@
   <div class="chat__wrap">
     <div class="chat__container">
       <div class="chat__sidebar">
-        <div
-          class="sidebar__rooms"
-          v-for="roomItem in rooms"
-          :key="roomItem.id"
-        >
-          <span class="sidebar__room">{{ roomItem.room }}</span>
-        </div>
-        <div
-          class="sidebar__users"
-          v-for="userItem in users"
-          :key="userItem.room"
-        >
-          <span class="sidebar__user">{{ userItem.users }}</span>
+        <h5 class="room__title">Chatrooms</h5>
+        <div class="sidebar__rooms">
+          <div
+            class="sidebar__users"
+            v-for="userItem in users"
+            :key="userItem.room"
+          >
+            <span class="sidebar__room">{{ userItem.room }}:</span>
+            <span
+              class="sidebar__user"
+              v-for="chatUser in userItem.users"
+              :key="chatUser.toString()"
+              >{{ chatUser.toString() }}</span
+            >
+          </div>
         </div>
       </div>
       <div class="chat__messages">
@@ -31,7 +33,7 @@
               v-for="message in messages"
               :key="message.id"
             >
-              <span class="message__title">[{{ message.name }}]: </span>
+              <span class="message__title">{{ message.name }}: </span>
               <span class="message__text-content">{{ message.message }}</span>
               <span class="message__text-time">{{ message.timestamp }}</span>
             </div>
@@ -121,13 +123,15 @@ export default {
   width: 100%;
   height: 70vh;
   display: grid;
-  grid-template-columns: 1fr 5fr;
+  grid-template-columns: 1fr 4fr;
 }
 
 .chat__sidebar {
   grid-area: 1 / 1 / 1 / 1;
   height: 70vh;
   display: grid;
+  grid-template-rows: 5vh 1fr;
+  border-right: 0.3rem solid hsla(178, 100%, 37%, 1);
 }
 
 .chat__messages {
@@ -162,28 +166,59 @@ export default {
 }
 
 .sidebar__rooms {
-  padding: 1.3rem 0.5rem;
+  padding: 0.5rem 0.1rem;
   display: grid;
-  gap: 0rem 1rem;
+  gap: 0.3rem 0rem;
   justify-items: center;
   align-items: start;
   align-content: space-between;
   background-color: hsla(178, 99%, 99%, 15);
+  overflow: auto;
+}
+
+.sidebar__room {
+  padding: 0.1rem 0.2rem;
+  margin: 0rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  background-color: hsla(21, 70%, 44%, 1);
+  color: hsla(178, 99%, 99%, 15);
+}
+
+.room__title {
+  padding: 0.1rem 0.1rem;
+  margin: 0rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(178, 100%, 37%, 1);
 }
 
 .sidebar__users {
-  padding: 1.3rem 0.5rem;
+  padding: 0.2rem 0.1rem;
   display: grid;
-  gap: 0rem 1rem;
+  gap: 0rem 0.3rem;
   justify-items: center;
   align-items: start;
   align-content: space-between;
-  background-color: hsla(178, 99%, 99%, 15);
+  background-color: hsla(178, 100%, 37%, 1);
+}
+
+.sidebar__user {
+  padding: 0rem 0.1rem;
+  margin: 0rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(178, 100%, 37%, 1);
+  width: 100%;
 }
 
 .message__item {
-  margin: 0.5rem 0rem;
-  padding: 1.3rem 0.5rem;
+  padding: 0.5rem 0rem;
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   gap: 0rem 1rem;
@@ -191,11 +226,13 @@ export default {
   align-items: start;
   align-content: space-between;
   background-color: hsla(178, 99%, 99%, 15);
+  border-bottom: 0.1rem dashed hsla(178, 100%, 37%, 1);
 }
 
 .message__title {
-  border: 0.3rem double hsla(178, 100%, 37%, 1);
-  padding: 0.3rem;
+  border-left: 0.5rem solid hsla(178, 100%, 37%, 1);
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.1rem 0.3rem 0.2rem;
   font-weight: 700;
   text-align: center;
   color: white;
@@ -210,7 +247,8 @@ export default {
   text-align: left;
 }
 .message__text-time {
-  padding: 0.2rem;
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
   color: hsla(178, 100%, 37%, 1);
   font-weight: 500;
   text-align: left;
