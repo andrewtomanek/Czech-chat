@@ -10,6 +10,8 @@
 
 <style>
 html {
+  margin: 0rem;
+  padding: 0rem;
   background-color: hsla(178, 100%, 37%, 0.1);
 }
 

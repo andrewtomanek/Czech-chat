@@ -1,22 +1,41 @@
 <template>
-  <div class="chat__container">
-    <div class="chat__card-box">
-      <p class="chat__nomessages" v-if="messages.length == 0">
-        [No messages yet!]
-        <span class="message__text-content">{{ room }}</span>
-      </p>
-      <div
-        class="messages__box"
-        v-chat-scroll="{ always: false, smooth: true }"
-      >
+  <div class="chat__wrap">
+    <div class="chat__container">
+      <div class="chat__sidebar">
         <div
-          class="message__item"
-          v-for="message in messages"
-          :key="message.id"
+          class="sidebar__rooms"
+          v-for="roomItem in rooms"
+          :key="roomItem.id"
         >
-          <span class="message__title">[{{ message.name }}]: </span>
-          <span class="message__text-content">{{ message.message }}</span>
-          <span class="message__text-time">{{ message.timestamp }}</span>
+          <span class="sidebar__room">{{ roomItem.room }}</span>
+        </div>
+        <div
+          class="sidebar__users"
+          v-for="userItem in users"
+          :key="userItem.room"
+        >
+          <span class="sidebar__user">{{ userItem.users }}</span>
+        </div>
+      </div>
+      <div class="chat__messages">
+        <div class="chat__card-box">
+          <p class="chat__nomessages" v-if="messages.length == 0">
+            [No messages yet!]
+          </p>
+          <div
+            class="messages__box"
+            v-chat-scroll="{ always: false, smooth: true }"
+          >
+            <div
+              class="message__item"
+              v-for="message in messages"
+              :key="message.id"
+            >
+              <span class="message__title">[{{ message.name }}]: </span>
+              <span class="message__text-content">{{ message.message }}</span>
+              <span class="message__text-time">{{ message.timestamp }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,7 +58,9 @@ export default {
   },
   data() {
     return {
-      messages: []
+      messages: [],
+      users: [],
+      rooms: []
     };
   },
   created() {
@@ -62,19 +83,61 @@ export default {
         }
       });
     });
+
+    let usersRef = fb.collection("rooms");
+
+    usersRef.onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if ((change.type = "added")) {
+          let doc = change.doc;
+          this.users.push({
+            id: doc.id,
+            users: [...doc.data().users],
+            room: doc.data().room
+          });
+          this.rooms.push({
+            id: doc.id,
+            room: doc.data().room
+          });
+        }
+      });
+    });
   }
 };
 </script>
 
 <style>
-.chat__container {
-  width: 100%;
+.chat__wrap {
+  margin: 0rem;
+  padding: 0rem;
   height: 85vh;
   display: grid;
+  grid-auto-flow: row;
 }
-.chat__card-box {
+
+.chat__container {
+  margin: 0rem;
+  padding: 0rem;
   width: 100%;
-  height: 100%;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: 1fr 5fr;
+}
+
+.chat__sidebar {
+  grid-area: 1 / 1 / 1 / 1;
+  height: 70vh;
+  display: grid;
+}
+
+.chat__messages {
+  grid-area: 1 / 2 / 1 / 2;
+  width: 80vw;
+  height: 70vh;
+}
+
+.chat__card-box {
+  width: 80vw;
   display: grid;
   justify-items: center;
   justify-content: space-between;
@@ -98,10 +161,29 @@ export default {
   overflow-x: hidden;
 }
 
+.sidebar__rooms {
+  padding: 1.3rem 0.5rem;
+  display: grid;
+  gap: 0rem 1rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 99%, 99%, 15);
+}
+
+.sidebar__users {
+  padding: 1.3rem 0.5rem;
+  display: grid;
+  gap: 0rem 1rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 99%, 99%, 15);
+}
+
 .message__item {
   margin: 0.5rem 0rem;
   padding: 1.3rem 0.5rem;
-  width: 97vw;
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
   gap: 0rem 1rem;

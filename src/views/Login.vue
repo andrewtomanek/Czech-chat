@@ -89,6 +89,18 @@ export default {
   },
   methods: {
     login() {
+      if (this.name === "") {
+        this.errorText = "Please pick a nickname!";
+        return;
+      }
+      if (this.password === "") {
+        this.errorText = "Please enter password!";
+        return;
+      }
+      if (this.room === "") {
+        this.errorText = "Please pick a Chatroom name!";
+        return;
+      }
       if (!this.userSet.has(this.name)) {
         this.userSet.add(this.name);
         if (!this.roomSet.has(this.room)) {
