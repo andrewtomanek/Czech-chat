@@ -169,11 +169,11 @@ export default {
   padding: 0.5rem 0.1rem;
   display: grid;
   gap: 0.3rem 0rem;
-  justify-items: center;
+  justify-items: start;
   align-items: start;
   align-content: space-between;
   background-color: hsla(178, 99%, 99%, 15);
-  overflow: auto;
+  overflow-x: hidden;
 }
 
 .sidebar__room {
@@ -211,7 +211,7 @@ export default {
   margin: 0rem;
   font-size: 1rem;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
   width: 100%;

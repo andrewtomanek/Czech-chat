@@ -66,6 +66,7 @@ export default {
   grid-template-columns: 80vw 1fr;
   width: 100%;
   height: 100%;
+  border: 0.3rem solid hsla(178, 100%, 37%, 1);
 }
 
 .input__box {

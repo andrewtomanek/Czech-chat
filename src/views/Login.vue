@@ -7,7 +7,7 @@
           <input
             type="text"
             class="login__input"
-            placeholder="Please enter your name ..."
+            placeholder="Enter your name ..."
             name="name"
             v-model="name"
           />
@@ -17,6 +17,7 @@
           <input
             type="password"
             class="login__input"
+            placeholder="Enter your password ..."
             name="password"
             v-model="password"
           />
@@ -26,7 +27,7 @@
           <input
             type="text"
             class="login__input"
-            placeholder="Please enter room name ..."
+            placeholder="Enter room name ..."
             name="room"
             v-model="room"
           />
@@ -39,15 +40,6 @@
       </button>
     </div>
     <div class="chat__board">
-      <div class="user__box">
-        <div
-          class="user__item"
-          v-for="chatUser in userList"
-          :key="chatUser.toString()"
-        >
-          <span class="user__name">{{ chatUser }}</span>
-        </div>
-      </div>
       <div class="chat__sidebar">
         <h5 class="room__title">Chatrooms</h5>
         <div class="sidebar__rooms">
@@ -244,6 +236,7 @@ export default {
   margin: 0;
   padding: 0;
   width: 100%;
+  height: 85vh;
 }
 .login__card {
   padding: 1rem 0.2rem;
@@ -252,6 +245,7 @@ export default {
   justify-content: center;
   align-items: center;
   grid-gap: 1rem;
+  height: 40vh;
 }
 .login__title {
   font-size: 1rem;
@@ -268,7 +262,6 @@ export default {
   font-size: 1rem;
   font-weight: 600;
   padding: 0.2rem;
-  width: 100%;
   color: hsla(178, 50%, 30%, 1);
   border: 0.2rem solid hsla(21, 70%, 44%, 1);
 }
@@ -300,6 +293,7 @@ label {
   background-color: hsla(178, 100%, 37%, 1);
   border: 0.1rem solid hsla(21, 70%, 44%, 1);
   color: white;
+  cursor: pointer;
 }
 
 .user__box {
@@ -363,20 +357,21 @@ label {
 
 .chat__sidebar {
   grid-area: 1 / 1 / 1 / 1;
-  height: 30vh;
   display: grid;
   grid-template-rows: 5vh 1fr;
-  border-right: 0.3rem solid hsla(178, 100%, 37%, 1);
+  border: 0.3rem solid hsla(178, 100%, 37%, 1);
+  height: 40vh;
 }
 
 .sidebar__rooms {
   padding: 0.5rem 0.1rem;
+  gap: 2rem 0.3rem;
   display: grid;
   grid-auto-flow: row;
-  gap: 0.3rem 0rem;
-  justify-items: center;
+  justify-items: start;
   align-items: start;
   align-content: space-between;
+  justify-content: space-between;
   background-color: hsla(178, 99%, 99%, 15);
   overflow: auto;
 }
@@ -403,13 +398,13 @@ label {
 
 .sidebar__users {
   padding: 0.2rem 0.1rem;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 0rem 0.3rem;
+  display: flex;
+  flex-flow: row wrap;
   justify-items: center;
   align-items: start;
   align-content: space-between;
   background-color: hsla(178, 100%, 37%, 1);
+  cursor: pointer;
 }
 
 .sidebar__user {
@@ -420,6 +415,5 @@ label {
   text-align: center;
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
-  width: 100%;
 }
 </style>
