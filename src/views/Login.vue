@@ -2,29 +2,35 @@
   <div class="login__container">
     <div class="login__card">
       <form @submit.prevent="login" class="login__form">
-        <label for="name">Username</label>
-        <input
-          type="text"
-          class="login__input"
-          placeholder="Please enter your name ..."
-          name="name"
-          v-model="name"
-        />
-        <label for="password">Password</label>
-        <input
-          type="password"
-          class="login__input"
-          name="password"
-          v-model="password"
-        />
-        <label for="room">Room</label>
-        <input
-          type="text"
-          class="login__input"
-          placeholder="Please enter room name ..."
-          name="room"
-          v-model="room"
-        />
+        <div class="input__wrap">
+          <label for="name">Username</label>
+          <input
+            type="text"
+            class="login__input"
+            placeholder="Please enter your name ..."
+            name="name"
+            v-model="name"
+          />
+        </div>
+        <div class="input__wrap">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            class="login__input"
+            name="password"
+            v-model="password"
+          />
+        </div>
+        <div class="input__wrap">
+          <label for="room">Room</label>
+          <input
+            type="text"
+            class="login__input"
+            placeholder="Please enter room name ..."
+            name="room"
+            v-model="room"
+          />
+        </div>
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
         <button type="submit" class="login__button">Enter Chat</button>
       </form>
@@ -42,22 +48,25 @@
           <span class="user__name">{{ chatUser }}</span>
         </div>
       </div>
-      <div class="room__box">
-        <div
-          class="room__list"
-          @click="pickRoom(chatItem.room)"
-          v-for="chatItem in chatArray"
-          :key="chatItem.id"
-        >
-          <span class="room__title">{{ chatItem.room }} </span>
-          <span class="room__users">{{ chatItem.users.toString() }}</span>
-          <span class="room__id">{{ chatItem.id }}</span>
+      <div class="chat__sidebar">
+        <h5 class="room__title">Chatrooms</h5>
+        <div class="sidebar__rooms">
+          <div
+            class="sidebar__users"
+            v-for="userItem in chatArray"
+            @click="pickRoom(userItem.room)"
+            :key="userItem.room"
+          >
+            <span class="sidebar__room">{{ userItem.room }}:</span>
+            <span
+              class="sidebar__user"
+              v-for="chatUser in userItem.users"
+              :key="chatUser.toString()"
+              >{{ chatUser.toString() }}</span
+            >
+          </div>
         </div>
       </div>
-      <p class="login__danger">{{ userList }}</p>
-      <p class="login__danger">{{ roomList }}</p>
-      <p class="login__danger">{{ chatArray }}</p>
-      <p class="login__danger">{{ userArray }}</p>
     </div>
   </div>
 </template>
@@ -264,6 +273,14 @@ export default {
   border: 0.2rem solid hsla(21, 70%, 44%, 1);
 }
 
+.input__wrap {
+  display: grid;
+  grid-auto-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  grid-gap: 1rem;
+}
+
 label {
   font-size: 1rem;
   font-weight: 600;
@@ -342,5 +359,67 @@ label {
   color: hsla(178, 100%, 37%, 1);
   font-weight: 500;
   text-align: left;
+}
+
+.chat__sidebar {
+  grid-area: 1 / 1 / 1 / 1;
+  height: 30vh;
+  display: grid;
+  grid-template-rows: 5vh 1fr;
+  border-right: 0.3rem solid hsla(178, 100%, 37%, 1);
+}
+
+.sidebar__rooms {
+  padding: 0.5rem 0.1rem;
+  display: grid;
+  grid-auto-flow: row;
+  gap: 0.3rem 0rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 99%, 99%, 15);
+  overflow: auto;
+}
+
+.sidebar__room {
+  padding: 0.1rem 0.2rem;
+  margin: 0rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  background-color: hsla(21, 70%, 44%, 1);
+  color: hsla(178, 99%, 99%, 15);
+}
+
+.room__title {
+  padding: 0.1rem 0.1rem;
+  margin: 0rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(178, 100%, 37%, 1);
+}
+
+.sidebar__users {
+  padding: 0.2rem 0.1rem;
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0rem 0.3rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 100%, 37%, 1);
+}
+
+.sidebar__user {
+  padding: 0rem 0.1rem;
+  margin: 0rem;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(178, 100%, 37%, 1);
+  width: 100%;
 }
 </style>

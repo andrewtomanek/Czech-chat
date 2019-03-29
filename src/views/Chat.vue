@@ -108,7 +108,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chat__wrap {
   margin: 0rem;
   padding: 0rem;
