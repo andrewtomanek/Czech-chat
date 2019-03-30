@@ -12,6 +12,11 @@
 html {
   margin: 0rem;
   padding: 0rem;
+}
+
+body {
+  margin: 0rem;
+  padding: 0rem;
   background-color: hsla(178, 100%, 37%, 0.1);
 }
 
@@ -35,7 +40,6 @@ nav {
 
 nav a {
   width: 100%;
-  font-weight: bold;
   color: white;
   border-bottom: 0.3rem solid hsla(178, 56%, 29%, 1);
   text-decoration: none;

@@ -401,7 +401,6 @@ label {
   display: flex;
   flex-flow: row wrap;
   justify-items: center;
-  align-items: start;
   align-content: space-between;
   background-color: hsla(178, 100%, 37%, 1);
   cursor: pointer;

@@ -115,6 +115,7 @@ export default {
   height: 85vh;
   display: grid;
   grid-auto-flow: row;
+  overflow: hidden;
 }
 
 .chat__container {
