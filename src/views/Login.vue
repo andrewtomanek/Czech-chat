@@ -12,7 +12,8 @@
             class="login__input"
             placeholder="Enter your name ..."
             name="name"
-            v-model.trim="$v.name.$model"
+            @blur="$v.name.$touch()"
+            v-model="name"
           />
           <div class="error" v-if="!$v.name.required">Field is required</div>
           <div class="error" v-if="!$v.name.minLength">
@@ -29,13 +30,14 @@
             class="login__input"
             placeholder="Enter your password ..."
             name="password"
-            v-model.trim.lazy="$v.password.$model"
+            @blur="$v.password.$touch()"
+            v-model="password"
           />
           <div class="error" v-if="!$v.password.required">
             Field is required
           </div>
           <div class="error" v-if="!$v.password.minLength">
-            Must be minLength {{ $v.password.$params.minLength }}
+            Must be characters {{ $v.password.$params.minLength.min }} long
           </div>
         </div>
         <div class="input__wrap">
@@ -55,7 +57,9 @@
           </div>
         </div>
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
-        <button type="submit" class="login__button">Enter Chat</button>
+        <button type="submit" class="login__button" :disabled="$v.$invalid">
+          Enter Chat
+        </button>
       </form>
       <button @click="createRandomLogin" class="login__button">
         Generate login
