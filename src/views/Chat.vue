@@ -24,12 +24,14 @@
           <p class="chat__nomessages" v-if="messages.length == 0">
             [No messages yet!]
           </p>
-          <div
+          <transition-group
+            name="list"
+            tag="div"
             class="messages__box"
             v-chat-scroll="{ always: false, smooth: true }"
           >
             <div
-              class="message__item"
+              class="message__item list-complete-item"
               v-for="message in messages"
               :key="message.id"
             >
@@ -37,7 +39,7 @@
               <span class="message__text-content">{{ message.message }}</span>
               <span class="message__text-time">{{ message.timestamp }}</span>
             </div>
-          </div>
+          </transition-group>
         </div>
       </div>
     </div>
@@ -162,8 +164,61 @@ export default {
 
 .messages__box {
   height: 70vh;
+  width: 80vw;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.message__item {
+  padding: 0.5rem 0rem;
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  gap: 0rem 1rem;
+  justify-items: center;
+  align-items: start;
+  align-content: space-between;
+  background-color: hsla(178, 99%, 99%, 15);
+  border-bottom: 0.1rem dashed hsla(178, 100%, 37%, 1);
+  width: 80vw;
+}
+
+.list-complete-item {
+  transition: all 300ms ease-in;
+  opacity: 1;
+}
+
+.list-enter {
+  opacity: 0;
+  transform: translateX(10rem);
+  background-color: transparent;
+}
+
+.message__title {
+  border-left: 0.5rem solid hsla(178, 100%, 37%, 1);
+  margin-left: 0.5rem;
+  padding: 0.3rem 0.1rem 0.3rem 0.2rem;
+  font-weight: 700;
+  text-align: center;
+  color: white;
+  background-color: hsla(21, 70%, 44%, 1);
+}
+.message__text-content {
+  width: 100%;
+  padding: 0.3rem;
+  color: hsla(21, 70%, 44%, 1);
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+}
+.message__text-time {
+  margin-right: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  color: hsla(178, 100%, 37%, 1);
+  font-weight: 500;
+  text-align: left;
+}
+.message__input {
+  padding: 0;
 }
 
 .sidebar__rooms {
@@ -216,45 +271,5 @@ export default {
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
   width: 100%;
-}
-
-.message__item {
-  padding: 0.5rem 0rem;
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  gap: 0rem 1rem;
-  justify-items: center;
-  align-items: start;
-  align-content: space-between;
-  background-color: hsla(178, 99%, 99%, 15);
-  border-bottom: 0.1rem dashed hsla(178, 100%, 37%, 1);
-}
-
-.message__title {
-  border-left: 0.5rem solid hsla(178, 100%, 37%, 1);
-  margin-left: 0.5rem;
-  padding: 0.3rem 0.1rem 0.3rem 0.2rem;
-  font-weight: 700;
-  text-align: center;
-  color: white;
-  background-color: hsla(21, 70%, 44%, 1);
-}
-.message__text-content {
-  width: 100%;
-  padding: 0.3rem;
-  color: hsla(21, 70%, 44%, 1);
-  font-weight: 600;
-  font-size: 1rem;
-  text-align: left;
-}
-.message__text-time {
-  margin-right: 0.5rem;
-  padding: 0.2rem 0.5rem;
-  color: hsla(178, 100%, 37%, 1);
-  font-weight: 500;
-  text-align: left;
-}
-.message__input {
-  padding: 0;
 }
 </style>

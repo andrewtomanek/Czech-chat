@@ -63,7 +63,7 @@ export default {
   padding: 0rem;
   margin: 0;
   display: grid;
-  grid-template-columns: 80vw 1fr;
+  grid-template-columns: 70vw 1fr;
   width: 100%;
   height: 100%;
   border: 0.3rem solid hsla(178, 100%, 37%, 1);
@@ -95,5 +95,13 @@ export default {
   height: 100%;
   font-weight: 700;
   font-size: 1rem;
+  border: 0.3rem solid white;
+  transition: all 300ms ease-in;
+}
+
+.input__button:hover {
+  background-color: white;
+  color: hsla(21, 70%, 44%, 1);
+  border: 0.3rem solid hsla(21, 70%, 44%, 1);
 }
 </style>

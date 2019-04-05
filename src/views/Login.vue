@@ -10,6 +10,7 @@
           <input
             type="text"
             class="login__input"
+            :class="{ invalid: $v.name.$error }"
             placeholder="Enter your name ..."
             name="name"
             @blur="$v.name.$touch()"
@@ -28,6 +29,7 @@
           <input
             type="password"
             class="login__input"
+            :class="{ invalid: $v.password.$error }"
             placeholder="Enter your password ..."
             name="password"
             @blur="$v.password.$touch()"
@@ -118,7 +120,7 @@ export default {
   validations: {
     name: {
       required,
-      minLength: minLength(4)
+      minLength: minLength(3)
     },
     password: {
       required,
@@ -307,6 +309,18 @@ export default {
   border: 0.2rem solid hsla(21, 70%, 44%, 1);
 }
 
+.invalid {
+  border: 0.2rem solid red;
+  background-color: #ffc9aa;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+}
+
 .input__wrap {
   display: grid;
   grid-auto-flow: column;
@@ -342,6 +356,15 @@ label {
   color: hsla(178, 100%, 37%, 1);
   border: 0.2rem solid hsla(178, 100%, 37%, 1);
   background-color: white;
+}
+
+.login__button[disabled],
+.login__button[disabled]:hover,
+.login__button[disabled]:active {
+  border: 0.2rem solid grey;
+  background-color: white;
+  color: grey;
+  cursor: not-allowed;
 }
 
 .user__box {
