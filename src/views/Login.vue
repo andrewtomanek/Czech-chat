@@ -2,25 +2,41 @@
   <div class="login__container">
     <div class="login__card">
       <form @submit.prevent="login" class="login__form">
-        <div class="input__wrap">
+        <div
+          class="input__wrap"
+          :class="{ 'form-group--error': $v.name.$error }"
+        >
           <label for="name">Username</label>
           <input
             type="text"
             class="login__input"
             placeholder="Enter your name ..."
             name="name"
-            v-model="name"
+            v-model.trim="$v.name.$model"
           />
+          <div class="error" v-if="!$v.name.required">Field is required</div>
+          <div class="error" v-if="!$v.name.minLength">
+            Name must have at least {{ $v.name.$params.minLength.min }} letters.
+          </div>
         </div>
-        <div class="input__wrap">
+        <div
+          class="input__wrap"
+          :class="{ 'form-group--error': $v.password.$error }"
+        >
           <label for="password">Password</label>
           <input
             type="password"
             class="login__input"
             placeholder="Enter your password ..."
             name="password"
-            v-model="password"
+            v-model.trim.lazy="$v.password.$model"
           />
+          <div class="error" v-if="!$v.password.required">
+            Field is required
+          </div>
+          <div class="error" v-if="!$v.password.minLength">
+            Must be minLength {{ $v.password.$params.minLength }}
+          </div>
         </div>
         <div class="input__wrap">
           <label for="room">Room</label>
@@ -29,8 +45,14 @@
             class="login__input"
             placeholder="Enter room name ..."
             name="room"
-            v-model="room"
+            v-model.trim="$v.room.$model"
           />
+          <div class="error" v-if="!$v.room.required">
+            Field is required
+          </div>
+          <div class="error" v-if="!$v.room.minLength">
+            Must be minLength {{ $v.room.$params.minLength }}
+          </div>
         </div>
         <p v-if="errorText" class="login__danger">{{ errorText }}</p>
         <button type="submit" class="login__button">Enter Chat</button>
@@ -67,14 +89,15 @@
 import fb from "@/firebase/init";
 import { namesArray } from "@/names.js";
 import { placesArray } from "@/places.js";
+import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   name: "login",
   data() {
     return {
       name: "",
-      room: "",
       password: "",
+      room: "",
       rooms: [],
       roomList: [],
       userList: [],
@@ -87,6 +110,20 @@ export default {
       namesArray: namesArray,
       placesArray: placesArray
     };
+  },
+  validations: {
+    name: {
+      required,
+      minLength: minLength(4)
+    },
+    password: {
+      required,
+      minLength: minLength(4)
+    },
+    room: {
+      required,
+      minLength: minLength(4)
+    }
   },
   methods: {
     login() {
@@ -269,7 +306,7 @@ export default {
 .input__wrap {
   display: grid;
   grid-auto-flow: column;
-  justify-content: space-between;
+  justify-content: space-minLength;
   align-items: center;
   grid-gap: 1rem;
 }
@@ -291,9 +328,16 @@ label {
   font-weight: 700;
   font-size: 1rem;
   background-color: hsla(178, 100%, 37%, 1);
-  border: 0.1rem solid hsla(21, 70%, 44%, 1);
+  border: 0.2rem solid white;
   color: white;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login__button:hover {
+  color: hsla(178, 100%, 37%, 1);
+  border: 0.2rem solid hsla(178, 100%, 37%, 1);
+  background-color: white;
 }
 
 .user__box {
@@ -328,7 +372,7 @@ label {
   gap: 0rem 1rem;
   justify-items: center;
   align-items: start;
-  align-content: space-between;
+  align-content: space-minLength;
   background-color: hsla(178, 99%, 99%, 15);
 }
 
@@ -370,8 +414,8 @@ label {
   grid-auto-flow: row;
   justify-items: start;
   align-items: start;
-  align-content: space-between;
-  justify-content: space-between;
+  align-content: space-minLength;
+  justify-content: space-minLength;
   background-color: hsla(178, 99%, 99%, 15);
   overflow: auto;
 }
@@ -401,18 +445,26 @@ label {
   display: flex;
   flex-flow: row wrap;
   justify-items: center;
-  align-content: space-between;
+  align-content: space-minLength;
   background-color: hsla(178, 100%, 37%, 1);
+  border-right: 1rem solid hsla(21, 70%, 44%, 1);
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sidebar__users:hover {
+  background-color: hsla(21, 70%, 44%, 1);
+  border-right: 1rem solid transparent;
 }
 
 .sidebar__user {
-  padding: 0rem 0.1rem;
+  padding: 0rem 0.4rem;
   margin: 0rem;
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
+  border-right: 0.2rem dotted hsla(21, 70%, 44%, 1);
 }
 </style>

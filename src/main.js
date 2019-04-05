@@ -6,6 +6,8 @@ import VueChatScroll from "vue-chat-scroll";
 
 Vue.config.productionTip = false;
 Vue.use(VueChatScroll);
+import Vuelidate from "vuelidate";
+Vue.use(Vuelidate);
 
 new Vue({
   router,
