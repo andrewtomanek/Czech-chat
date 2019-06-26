@@ -329,6 +329,20 @@ export default {
   grid-gap: 1rem;
 }
 
+@media all and (max-width: 736px) {
+  .login__card {
+    height: 100%;
+  }
+
+  .message__input {
+    width: 90%;
+  }
+
+  .input__wrap {
+    grid-auto-flow: row;
+  }
+}
+
 label {
   font-size: 1rem;
   font-weight: 600;
