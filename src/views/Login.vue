@@ -67,31 +67,15 @@
         Generate login
       </button>
     </div>
-    <div class="chat__board">
-      <div class="chat__sidebar">
-        <h5 class="room__title">Chatrooms</h5>
-        <div class="sidebar__rooms">
-          <div
-            class="sidebar__users"
-            v-for="userItem in chatArray"
-            @click="pickRoom(userItem.room)"
-            :key="userItem.room"
-          >
-            <span class="sidebar__room">{{ userItem.room }}:</span>
-            <span
-              class="sidebar__user"
-              v-for="chatUser in userItem.users"
-              :key="chatUser.toString()"
-              >{{ chatUser.toString() }}</span
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+    <chat-board
+      v-bind:roomsArray="chatArray"
+      @update-room="pickRoom"
+    ></chat-board>
   </div>
 </template>
 
 <script>
+import Board from "../components/Board.vue";
 import fb from "@/firebase/init";
 import { namesArray } from "@/names.js";
 import { placesArray } from "@/places.js";
@@ -99,6 +83,9 @@ import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   name: "login",
+  components: {
+    chatBoard: Board
+  },
   data() {
     return {
       name: "",
