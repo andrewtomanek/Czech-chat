@@ -36,8 +36,8 @@ export default {
         fb.collection("messages")
           .add({
             message: this.newMessage,
-            name: this.name,
-            room: this.room,
+            name: this.name || sessionStorage.getItem("username"),
+            room: this.room || sessionStorage.getItem("userroom"),
             timestamp: Date.now()
           })
           .catch(err => {

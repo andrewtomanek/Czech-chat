@@ -110,6 +110,9 @@ export default {
         }
       });
     });
+  },
+  beforeDestroy() {
+    sessionStorage.clear();
   }
 };
 </script>
@@ -276,4 +279,121 @@ export default {
   background-color: hsla(178, 100%, 37%, 1);
   width: 100%;
 }
+
+@media (max-width: 736px) {
+  .chat__wrap {
+    margin: 0rem;
+    padding: 0rem;
+    height: 100vh;
+    width: 100vw;
+    display: grid;
+    grid-auto-flow: row;
+  }
+
+  .chat__container {
+    margin: 0rem;
+    padding: 0rem;
+    width: 100vw;
+    height: 70vh;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    grid-template-columns: 100vw;
+  }
+
+  .chat__sidebar {
+    grid-area: 1 / 1 / 1 / 1;
+    height: auto;
+    width: 100vw;
+    display: grid;
+    grid-template-rows: auto;
+    border-right: 0.3rem solid hsla(178, 100%, 37%, 1);
+  }
+
+  .chat__messages {
+    grid-area: 2 / 1 / 2 / 1;
+    width: 100vw;
+    height: 60vh;
+  }
+
+  .chat__card-box {
+    width: 100vw;
+    display: grid;
+    justify-items: center;
+    justify-content: space-between;
+    align-items: center;
+    align-content: space-between;
+  }
+
+  .chat__nomessages {
+    height: auto;
+    width: 100%;
+    color: hsla(3, 99%, 48%, 1);
+    font-weight: 700;
+    text-align: center;
+    background-color: hsla(205, 100%, 80%, 0.9);
+    border-radius: 15px;
+  }
+
+  .messages__box {
+    height: 50vh;
+    width: 100vw;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .message__item {
+    width: 100vw;
+  }
+
+  .sidebar__rooms {
+    padding: 0.5rem 0.1rem;
+    display: flex;
+    flex-flow: row wrap;
+    gap: 0.3rem 0rem;
+    justify-items: start;
+    align-items: start;
+    align-content: space-between;
+    background-color: hsla(178, 99%, 99%, 15);
+    width: 100vw;
+    height: 20vh;
+  }
+
+  .sidebar__users {
+    padding: 0.2rem 0.1rem;
+    display: flex;
+    flex-direction: row wrap;
+    gap: 0rem 0.3rem;
+    justify-items: center;
+    align-items: start;
+    align-content: space-between;
+    background-color: hsla(178, 100%, 37%, 1);
+    width: 100vw;
+  }
+}
+/* 
+@media (max-width: 480px) {
+  .chat__container {
+    margin: 0rem;
+    padding: 0rem;
+    width: 100%;
+    height: 70vh;
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+  }
+
+  .chat__sidebar {
+    grid-area: 1 / 1 / 1 / 1;
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-rows: 5vh 1fr;
+    border-right: 0.3rem solid hsla(178, 100%, 37%, 1);
+  }
+
+  .chat__messages {
+    grid-area: 1 / 2 / 1 / 2;
+    width: 100vw;
+    height: 60vh;
+  }
+} */
 </style>

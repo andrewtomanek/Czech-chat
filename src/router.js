@@ -13,6 +13,13 @@ export default new Router({
       path: "/",
       name: "login",
       component: Login
+      /*       beforeEnter: (to, from, next) => {
+        if (to.params.name || sessionStorage.clear()) {
+          next();
+        } else {
+          next({ name: "login" });
+        }
+      } */
     },
     {
       path: "/chat",
