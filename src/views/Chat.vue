@@ -68,9 +68,13 @@ export default {
     };
   },
   created() {
+    if (this.name) sessionStorage.setItem("username", this.name);
+    console.log(sessionStorage.getItem("username"));
+    if (this.room) sessionStorage.setItem("userroom", this.room);
+    console.log(sessionStorage.getItem("userroom"));
     let ref = fb
       .collection("messages")
-      .where("room", "==", this.room)
+      .where("room", "==", this.room || sessionStorage.getItem("userroom"))
       .orderBy("timestamp");
 
     ref.onSnapshot(snapshot => {

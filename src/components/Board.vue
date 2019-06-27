@@ -31,8 +31,8 @@ export default {
     }
   },
   methods: {
-    chooseRoom(item) {
-      this.$emit("update-room", item);
+    chooseRoom(room) {
+      this.$emit("update-room", room);
     }
   }
 };

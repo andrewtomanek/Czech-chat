@@ -20,7 +20,7 @@ export default new Router({
       component: Chat,
       props: true,
       beforeEnter: (to, from, next) => {
-        if (to.params.name) {
+        if (to.params.name || sessionStorage.getItem("username")) {
           next();
         } else {
           next({ name: "login" });
