@@ -21,7 +21,7 @@ body {
 }
 
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: 'Source Sans Pro',Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -49,5 +49,9 @@ nav a {
 
 nav a.router-link-exact-active {
   border-bottom: 0.3rem solid hsla(21, 48%, 51%, 1);
+}
+
+button {
+  font-family: 'Ubuntu',monospace;
 }
 </style>

@@ -82,7 +82,7 @@ export default {
   display: grid;
   height: 10vh;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 2rem;
   color: hsla(21, 56%, 29%, 1);
 }
 
@@ -94,7 +94,7 @@ export default {
   width: 100%;
   height: 100%;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 2rem;
   border: 0.3rem solid white;
   transition: all 300ms ease-in;
 }
