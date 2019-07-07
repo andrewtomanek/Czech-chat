@@ -62,7 +62,7 @@ Routing trough Vue-router.<br />
 
 andrewtomanek - andrewtomanek@gmail.com
 
-[https://github.com/andrewtomanek/Czech-chat](https://github.com/dbader/)
+[https://github.com/andrewtomanek/Czech-chat](https://github.com/andrewtomanek/Czech-chat)
 
 ## License
 
