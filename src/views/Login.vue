@@ -16,6 +16,9 @@
             @blur="$v.name.$touch()"
             v-model="name"
           />
+          <div class="error__empty" v-if="$v.name.required">
+            Field is required
+          </div>
           <div class="error" v-if="!$v.name.required">Field is required</div>
           <div class="error" v-if="!$v.name.minLength">
             Name must have at least {{ $v.name.$params.minLength.min }} letters.
@@ -35,6 +38,9 @@
             @blur="$v.password.$touch()"
             v-model="password"
           />
+          <div class="error__empty" v-if="$v.password.required">
+            Field is required
+          </div>
           <div class="error" v-if="!$v.password.required">
             Field is required
           </div>
@@ -51,6 +57,9 @@
             name="room"
             v-model.trim="$v.room.$model"
           />
+          <div class="error__empty" v-if="$v.room.required">
+            Field is required
+          </div>
           <div class="error" v-if="!$v.room.required">
             Field is required
           </div>
@@ -306,6 +315,15 @@ export default {
   font-size: 0.9rem;
   font-weight: 400;
   margin: 0;
+  width: 100%;
+}
+
+.error__empty {
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin: 0;
+  width: 100%;
+  opacity: 0;
 }
 
 .input__wrap {
@@ -313,6 +331,7 @@ export default {
   grid-auto-flow: column;
   justify-content: space-minLength;
   align-items: center;
+  justify-content: end;
   grid-gap: 1rem;
 }
 
