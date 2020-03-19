@@ -63,7 +63,7 @@ export default {
 .sidebar__room {
   padding: 0.1rem 0.2rem;
   margin: 0rem;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
   text-align: center;
   background-color: hsla(21, 70%, 44%, 1);
@@ -73,7 +73,7 @@ export default {
 .room__title {
   padding: 0.1rem 0.1rem;
   margin: 0rem;
-  font-size: 1.1rem;
+  font-size: 2rem;
   font-weight: 700;
   text-align: center;
   color: white;
@@ -100,11 +100,25 @@ export default {
 .sidebar__user {
   padding: 0rem 0.4rem;
   margin: 0rem;
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 700;
   text-align: center;
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
   border-right: 0.2rem dotted hsla(21, 70%, 44%, 1);
+}
+
+@media all and (max-width: 736px) {
+  .room__title {
+    font-size: 1rem;
+  }
+
+  .sidebar__room {
+    font-size: 1rem;
+  }
+
+  .sidebar__user {
+    font-size: 1rem;
+  }
 }
 </style>

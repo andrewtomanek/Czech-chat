@@ -21,7 +21,7 @@ body {
 }
 
 #app {
-  font-family: 'Source Sans Pro',Helvetica, Arial, sans-serif;
+  font-family: "Source Sans Pro", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -44,7 +44,7 @@ nav a {
   border-bottom: 0.3rem solid hsla(178, 56%, 29%, 1);
   text-decoration: none;
   font-weight: 800;
-  font-size: 1.2rem;
+  font-size: 2rem;
 }
 
 nav a.router-link-exact-active {
@@ -52,6 +52,12 @@ nav a.router-link-exact-active {
 }
 
 button {
-  font-family: 'Ubuntu',monospace;
+  font-family: "Ubuntu", monospace;
+}
+
+@media all and (max-width: 736px) {
+  nav a {
+    font-size: 1rem;
+  }
 }
 </style>

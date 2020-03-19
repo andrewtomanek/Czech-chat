@@ -287,7 +287,7 @@ export default {
   height: 40vh;
 }
 .login__title {
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 .login__form {
@@ -298,7 +298,7 @@ export default {
   grid-gap: 1rem;
 }
 .login__input {
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
   padding: 0.2rem;
   color: hsla(178, 50%, 30%, 1);
@@ -312,14 +312,14 @@ export default {
 
 .error {
   color: red;
-  font-size: 0.9rem;
+  font-size: 1.9rem;
   font-weight: 400;
   margin: 0;
   width: 100%;
 }
 
 .error__empty {
-  font-size: 0.9rem;
+  font-size: 1.9rem;
   font-weight: 400;
   margin: 0;
   width: 100%;
@@ -335,22 +335,8 @@ export default {
   grid-gap: 1rem;
 }
 
-@media all and (max-width: 736px) {
-  .login__card {
-    height: 100%;
-  }
-
-  .message__input {
-    width: 90%;
-  }
-
-  .input__wrap {
-    grid-auto-flow: row;
-  }
-}
-
 label {
-  font-size: 1rem;
+  font-size: 2rem;
   font-weight: 600;
   padding: 0.2rem;
   width: 100%;
@@ -361,10 +347,9 @@ label {
   background-color: red;
 }
 .login__button {
-  font-size: 1rem;
   padding: 0.3rem;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 2rem;
   background-color: hsla(178, 100%, 37%, 1);
   border: 0.2rem solid white;
   color: white;
@@ -406,46 +391,6 @@ label {
   width: 100%;
 }
 
-.room__box {
-  display: grid;
-  grid-auto-flow: row;
-  width: 100vw;
-}
-
-.room__list {
-  padding: 0.3rem 0.5rem;
-  display: grid;
-  grid-auto-flow: column;
-  gap: 0rem 1rem;
-  justify-items: center;
-  align-items: start;
-  align-content: space-minLength;
-  background-color: hsla(178, 99%, 99%, 15);
-}
-
-.room__title {
-  border: 0.3rem double hsla(178, 100%, 37%, 1);
-  padding: 0.3rem;
-  font-weight: 700;
-  text-align: center;
-  color: white;
-  background-color: hsla(21, 70%, 44%, 1);
-}
-.room__users {
-  width: 100%;
-  padding: 0.3rem;
-  color: hsla(21, 70%, 44%, 1);
-  font-weight: 600;
-  font-size: 1rem;
-  text-align: left;
-}
-.room__id {
-  padding: 0.2rem;
-  color: hsla(178, 100%, 37%, 1);
-  font-weight: 500;
-  text-align: left;
-}
-
 .chat__sidebar {
   grid-area: 1 / 1 / 1 / 1;
   display: grid;
@@ -477,16 +422,6 @@ label {
   color: hsla(178, 99%, 99%, 15);
 }
 
-.room__title {
-  padding: 0.1rem 0.1rem;
-  margin: 0rem;
-  font-size: 1.1rem;
-  font-weight: 700;
-  text-align: center;
-  color: white;
-  background-color: hsla(178, 100%, 37%, 1);
-}
-
 .sidebar__users {
   padding: 0.2rem 0.1rem;
   display: flex;
@@ -513,5 +448,43 @@ label {
   color: white;
   background-color: hsla(178, 100%, 37%, 1);
   border-right: 0.2rem dotted hsla(21, 70%, 44%, 1);
+}
+
+@media all and (max-width: 736px) {
+  .login__card {
+    height: 100%;
+  }
+
+  .login__title {
+    font-size: 1rem;
+  }
+
+  .login__input {
+    font-size: 1rem;
+  }
+
+  .message__input {
+    width: 90%;
+  }
+
+  .input__wrap {
+    grid-auto-flow: row;
+  }
+
+  label {
+    font-size: 1rem;
+  }
+
+  .error {
+    font-size: 0.9rem;
+  }
+
+  .error__empty {
+    font-size: 0.9rem;
+  }
+
+  .login__button {
+    font-size: 1rem;
+  }
 }
 </style>
