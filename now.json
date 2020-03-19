@@ -1,7 +1,15 @@
 {
   "version": 2,
-  "name": "Czech-chat",
-  "builds": [
+  "build": {
+    "env": {
+      "VUE_APP_FIREBASE_KEY": "@vue-app-firebase-key",
+      "VUE_APP_FIREBASE_DOMAIN": "@vue-app-firebase-domain",
+      "VUE_APP_FIREBASE_DATABASE": "@vue-app-firebase-database",
+      "VUE_APP_FIREBASE_PROJECT_ID": "@vue-app-firebase-project-id",
+      "VUE_APP_FIREBASE_STORAGE_BUCKET": "@vue-app-firebase-storage-bucket",
+      "VUE_APP_FIREBASE_SENDER_ID": "@vue-app-firebase-sender-id"
+    }
+  },  "builds": [
     {"src": "package.json", "use": "@now/static-build"}
   ],
    "routes": [
