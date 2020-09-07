@@ -8,7 +8,7 @@
 # Czech-chat
 
 <br />
-  <a href="https://czech-chat-glkbn6a3d.now.sh">
+  <a href="https://czech-chat.andrewtomanek.now.sh">
    Website
   </a>
 
