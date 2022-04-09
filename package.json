@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "firebase": "^7.15.2",
-    "moment": "^2.27.0",
+    "moment": "^2.29.2",
     "vue": "^2.6.11",
     "vue-chat-scroll": "^1.4.0",
     "vue-cli": "^2.9.6",
